@@ -765,8 +765,10 @@ def convert_hashes_to_pattern(hashes):
     for h in hashes:
         if getattr(h, "simple_hash_value"):
             hash_value = h.simple_hash_value
-        else:
+        elif getattr(h, "fuzzy_hash_value"):
             hash_value = h.fuzzy_hash_value
+        else:
+            continue  # skip missing hash values
         if text_type(h.type_).startswith("SHA"):
             hash_type = "'" + "SHA" + "-" + text_type(h.type_)[3:] + "'"
         elif text_type(h.type_) == "SSDEEP":
